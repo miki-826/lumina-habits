@@ -1,0 +1,252 @@
+:root {
+    --bg-color: #0a0a0c;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --accent-primary: #8e2de2;
+    --accent-secondary: #4a00e0;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --success: #00f2fe;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 5rem;
+}
+
+/* Background Animated Blobs */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(80px);
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: move 20s infinite alternate;
+}
+
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    top: -100px;
+    left: -100px;
+}
+
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(to right, #00f2fe, #4facfe);
+    bottom: -150px;
+    right: -100px;
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(to right, #ff0080, #ff8c00);
+    top: 40%;
+    right: 20%;
+    animation-delay: -10s;
+}
+
+@keyframes move {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 50px) scale(1.1); }
+}
+
+/* Main Container */
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    z-index: 1;
+}
+
+header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    background: linear-gradient(to right, #fff, var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Add Habit Section */
+.add-habit {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    background: var(--glass-bg);
+    padding: 0.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+}
+
+input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+button#addBtn {
+    background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+button#addBtn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Habit List */
+.habit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.habit-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: slideIn 0.4s ease-out forwards;
+}
+
+.habit-card:hover {
+    transform: scale(1.02);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.habit-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.checkbox {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--glass-border);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.habit-card.completed .checkbox {
+    background: var(--success);
+    border-color: var(--success);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+.checkbox::after {
+    content: '✓';
+    color: white;
+    font-size: 0.8rem;
+    display: none;
+}
+
+.habit-card.completed .checkbox::after {
+    display: block;
+}
+
+.habit-name {
+    font-weight: 400;
+    transition: opacity 0.3s;
+}
+
+.habit-card.completed .habit-name {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.habit-stats {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.streak {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.delete-btn:hover {
+    color: #ff4d4d;
+}
